@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Main';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
 
 const ContactUs = () => {
+  const [form, setForm] = useState({});
+  const navigate = useNavigate();
+
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const send = qs.stringify(form);
+
+    try {
+      console.log(send);
+      const result = await axios.post('http://localhost:3314/contactUs', send);
+      if (result) {
+        console.log('success');
+        navigate('/tabel');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Layout>
       <Container fluid className="bg-dark text-light">
@@ -20,17 +45,17 @@ const ContactUs = () => {
             <div className="d-flex flex-column  ">
               <p className="py-5">fell free to contact us and we will get back to you as soon as we can.</p>
 
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-5">
-                  <Form.Control type="text" placeholder="name" />
+                  <Form.Control type="text" name="name" placeholder="name" onChange={handleChangeText} />
                 </Form.Group>
 
                 <Form.Group className="mb-5">
-                  <Form.Control type="email" placeholder="email address" />
+                  <Form.Control type="email" name="email" placeholder="email address" onChange={handleChangeText} />
                 </Form.Group>
 
                 <Form.Group className="mb-5">
-                  <Form.Control type="text" placeholder="tell us all about it" />
+                  <Form.Control type="text" name="message" placeholder="tell us all about it" onChange={handleChangeText} />
                 </Form.Group>
 
                 <div className="d-grid">
