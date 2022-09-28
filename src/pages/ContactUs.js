@@ -51,7 +51,11 @@ const ContactUs = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-5">
-                  <Form.Control type="email" name="email" placeholder="email address" onChange={handleChangeText} />
+                  <Form.Control type="text" name="phone_number" placeholder="phone number" onChange={handleChangeText} />
+                </Form.Group>
+
+                <Form.Group className="mb-5">
+                  <Form.Control type="tel" name="email" placeholder="email address" onChange={handleChangeText} />
                 </Form.Group>
 
                 <Form.Group className="mb-5">
