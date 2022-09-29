@@ -8,11 +8,15 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useDispatch } from 'react-redux';
 import { selectDetail } from '../redux/reducers/message';
+import Modal from 'react-bootstrap/Modal';
 
 function Tabel() {
   const [dataTable, setData] = useState([]);
   const [pageInfo, setPageInfo] = useState(null);
   const [keyword, setKeyword] = useState('');
+  const [smShow, setSmShow] = useState(false);
+
+  const handleClose = () => setSmShow(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,6 +29,12 @@ function Tabel() {
       setData(data.result);
       setPageInfo(data.pageInfo);
     });
+  };
+
+  const deleteData = (id) => {
+    axios.delete(`http://localhost:3314/contactUs/` + id);
+    setSmShow(false);
+    getData();
   };
 
   useEffect(() => {
@@ -95,9 +105,23 @@ function Tabel() {
                   detail
                 </Button>
                 <br />
-                <Button variant="danger" size="sm">
+                <Button variant="danger" size="sm" onClick={() => setSmShow(true)} className="me-2">
                   delete
                 </Button>
+                <Modal size="sm" show={smShow} onHide={() => setSmShow(false)} aria-labelledby="example-modal-sizes-title-sm" centered>
+                  <Modal.Header closeButton>
+                    <Modal.Title id="example-modal-sizes-title-sm">Confirmation</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>Are you sure?</Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Cancel
+                    </Button>
+                    <Button variant="danger" onClick={() => deleteData(data.id)}>
+                      Delete
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </td>
             </tr>
           ))}
@@ -118,6 +142,7 @@ function Tabel() {
         <Button variant="dark" disabled={pageInfo?.nextPage === null} onClick={getNextPage}>
           Next
         </Button>
+
         <select onChange={(e) => getData(e.target.value)}>
           <option value={1}>1</option>
           <option value={2}>2</option>
