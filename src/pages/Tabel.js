@@ -114,7 +114,7 @@ function Tabel() {
                   </Modal.Header>
                   <Modal.Body>Are you sure?</Modal.Body>
                   <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={() => handleClose}>
                       Cancel
                     </Button>
                     <Button variant="danger" onClick={() => deleteData(data.id)}>
