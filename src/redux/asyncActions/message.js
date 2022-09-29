@@ -4,9 +4,9 @@ import qs from 'qs';
 
 export const getAllMessage = createAsyncThunk('message/getAllMessage', async (request) => {
   try {
-    const url = `http://localhost:3314/contactUs/`;
-    const { data } = await axios.get(url, request);
-    console.log('ini dari asyncAction', request);
+    const url = `http://localhost:3314/contactUs?` + request;
+    const { data } = await axios.get(url);
+    console.log('ini dari asyncAction', data);
     return data;
   } catch (e) {
     console.log(e);
@@ -15,7 +15,7 @@ export const getAllMessage = createAsyncThunk('message/getAllMessage', async (re
 
 export const getMessage = createAsyncThunk('message/getMessage', async (request) => {
   try {
-    const url = `http://localhost:3314/contactUs/` + request;
+    const url = `http://localhost:3314/contactUs` + request;
     const { data } = await axios.get(url);
     console.log('ini dari asyncAction', data);
     return data;
@@ -43,6 +43,20 @@ export const editMessage = createAsyncThunk(
     try {
       const url = `http://localhost:3314/contactUs/${request.id}`;
       const { data } = await axios.patch(url, send);
+      console.log('ini dari asyncAction', data);
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  } // fungsi untuk mengambil data
+);
+
+export const deleteMessage = createAsyncThunk(
+  'message/deleteMessage', // nama action harus unique
+  async (request) => {
+    try {
+      const url = `http://localhost:3314/contactUs/${request}`;
+      const { data } = await axios.delete(url);
       console.log('ini dari asyncAction', data);
       return data;
     } catch (e) {

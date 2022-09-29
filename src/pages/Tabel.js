@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Main';
-import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectDetail } from '../redux/reducers/message';
 import Modal from 'react-bootstrap/Modal';
-import { getAllMessage, getMessage } from '../redux/asyncActions/message';
+import { getAllMessage, getMessage, deleteMessage } from '../redux/asyncActions/message';
 
 function Tabel() {
   const [keyword, setKeyword] = useState('');
@@ -32,7 +30,7 @@ function Tabel() {
   };
 
   const deleteData = (id) => {
-    axios.delete(`http://localhost:3314/contactUs/` + id);
+    dispatch(deleteMessage(id));
     setSmShow(false);
     getData();
   };
@@ -153,6 +151,7 @@ function Tabel() {
         </Button>
 
         <select onChange={(e) => getData(e.target.value)}>
+          <option>Limit</option>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>

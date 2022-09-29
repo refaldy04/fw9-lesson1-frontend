@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
