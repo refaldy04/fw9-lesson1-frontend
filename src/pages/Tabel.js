@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { useDispatch } from 'react-redux';
+import { selectDetail } from '../redux/reducers/message';
 
 function Tabel() {
   const [dataTable, setData] = useState([]);
@@ -13,6 +15,7 @@ function Tabel() {
   const [keyword, setKeyword] = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const getData = (limit = 5, page = 1, search = keyword, sort = 'name') => {
     limit = parseInt(limit);
@@ -79,8 +82,32 @@ function Tabel() {
               <td>{data.name}</td>
               <td>{data.email}</td>
               <td>{data.phone_number}</td>
+              <td>
+                <Button
+                  variant="success"
+                  size="sm"
+                  className="mb-2"
+                  onClick={() => {
+                    dispatch(selectDetail(data.id));
+                    navigate('/detail');
+                  }}
+                >
+                  detail
+                </Button>
+                <br />
+                <Button variant="danger" size="sm">
+                  delete
+                </Button>
+              </td>
             </tr>
           ))}
+          {dataTable.length < 1 && (
+            <tr className="">
+              <td colSpan={5} className="text-center py-5 table-high">
+                No data in here
+              </td>
+            </tr>
+          )}
         </tbody>
       </Table>
       <div className="d-flex justify-content-center align-items-center my-5 gap-3">
