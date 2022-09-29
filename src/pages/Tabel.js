@@ -15,6 +15,7 @@ function Tabel() {
   const [pageInfo, setPageInfo] = useState(null);
   const [keyword, setKeyword] = useState('');
   const [smShow, setSmShow] = useState(false);
+  const [id, setId] = useState(null);
 
   const handleClose = () => setSmShow(false);
 
@@ -105,26 +106,35 @@ function Tabel() {
                   detail
                 </Button>
                 <br />
-                <Button variant="danger" size="sm" onClick={() => setSmShow(true)} className="me-2">
+                {/* {} */}
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => {
+                    setId(data.id);
+                    setSmShow(true);
+                  }}
+                  className="me-2"
+                >
                   delete
                 </Button>
-                <Modal size="sm" show={smShow} onHide={() => setSmShow(false)} aria-labelledby="example-modal-sizes-title-sm" centered>
-                  <Modal.Header closeButton>
-                    <Modal.Title id="example-modal-sizes-title-sm">Confirmation</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>Are you sure?</Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={() => handleClose}>
-                      Cancel
-                    </Button>
-                    <Button variant="danger" onClick={() => deleteData(data.id)}>
-                      Delete
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
               </td>
             </tr>
           ))}
+          <Modal size="sm" show={smShow} onHide={() => setSmShow(false)} aria-labelledby="example-modal-sizes-title-sm" centered>
+            <Modal.Header closeButton>
+              <Modal.Title id="example-modal-sizes-title-sm">Confirmation</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Are you sure delete?</Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => deleteData(id)}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
           {dataTable.length < 1 && (
             <tr className="">
               <td colSpan={5} className="text-center py-5 table-high">
