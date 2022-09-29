@@ -9,26 +9,19 @@ import Form from 'react-bootstrap/Form';
 import { editMessage } from '../redux/asyncActions/message';
 
 const Detail = () => {
-  const [data, setData] = useState(null);
   const [form, setForm] = useState({});
   const [smShow, setSmShow] = useState(false);
 
-  const id = useSelector((state) => state.message.id);
   const dataMessage = useSelector((state) => state.message.dataMessage);
+
   const dispatch = useDispatch();
 
   const handleClose = () => setSmShow(false);
 
-  useEffect(() => {
-    axios.get(`http://localhost:3314/contactUs/${id}`).then(({ data }) => {
-      setData(data);
-    });
-  }, []);
-
   const onEdit = (e) => {
     e.preventDefault();
     console.log(form);
-    dispatch(editMessage({ id: data.id, message: form }));
+    dispatch(editMessage({ id: dataMessage.id, message: form }));
     handleClose();
   };
 
@@ -44,19 +37,19 @@ const Detail = () => {
           <div className=" d-flex justify-content-between align-items-center">
             <div className="d-flex flex-column">
               <p>Name</p>
-              <p className="">{data?.name}</p>
+              <p>{dataMessage.name}</p>
             </div>
           </div>
           <div className="d-flex justify-content-between align-items-center">
             <div className="d-flex flex-column">
               <p>Phone Number</p>
-              <p>{data?.phone_number}</p>
+              <p>{dataMessage.phone_number}</p>
             </div>
           </div>
           <div className="d-flex justify-content-between align-items-center">
             <div className="d-flex flex-column">
               <p>Email</p>
-              <p>{data?.email}</p>
+              <p>{dataMessage.email}</p>
             </div>
           </div>
           <div className="d-flex justify-content-between align-items-center">

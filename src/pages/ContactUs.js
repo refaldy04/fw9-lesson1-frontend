@@ -5,13 +5,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createMessage } from '../redux/asyncActions/message';
 
 const ContactUs = () => {
   const [form, setForm] = useState({});
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChangeText = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,17 +23,9 @@ const ContactUs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const send = qs.stringify(form);
-
-    try {
-      console.log(send);
-      const result = await axios.post('http://localhost:3314/contactUs', send);
-      if (result) {
-        console.log('success');
-        navigate('/tabel');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(send);
+    dispatch(createMessage(send));
+    navigate('/tabel');
   };
   return (
     <Layout>
@@ -72,7 +67,7 @@ const ContactUs = () => {
           </Col>
           <Col className="d-flex flex-column justify-content-between pt-5 pb-5">
             <div>
-              <div className="d-flex flex-column ">
+              <div className="d-flex flex-column mb-4">
                 <p className="text-secondary fw-bolder">opening hours</p>
                 <p>
                   Monday - Friday <br />
@@ -82,7 +77,7 @@ const ContactUs = () => {
                 </p>
               </div>
 
-              <div>
+              <div className="d-flex flex-column mb-4">
                 <p className="text-secondary fw-bolder">address</p>
                 <p>
                   Jln. Letjen Suparman 51

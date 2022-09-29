@@ -6,16 +6,18 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectDetail } from '../redux/reducers/message';
 import Modal from 'react-bootstrap/Modal';
+import { getAllMessage, getMessage } from '../redux/asyncActions/message';
 
 function Tabel() {
-  const [dataTable, setData] = useState([]);
-  const [pageInfo, setPageInfo] = useState(null);
   const [keyword, setKeyword] = useState('');
   const [smShow, setSmShow] = useState(false);
   const [id, setId] = useState(null);
+
+  const dataTable = useSelector((state) => state.message.dataTable);
+  const pageInfo = useSelector((state) => state.message.pageInfo);
 
   const handleClose = () => setSmShow(false);
 
@@ -26,10 +28,7 @@ function Tabel() {
     limit = parseInt(limit);
     page = parseInt(page);
     const query = new URLSearchParams({ limit, page, search, sort }).toString();
-    axios.get(`http://localhost:3314/contactUs?` + query).then(({ data }) => {
-      setData(data.result);
-      setPageInfo(data.pageInfo);
-    });
+    dispatch(getAllMessage(query));
   };
 
   const deleteData = (id) => {
@@ -99,7 +98,7 @@ function Tabel() {
                   size="sm"
                   className="mb-2"
                   onClick={() => {
-                    dispatch(selectDetail(data.id));
+                    dispatch(getMessage(data.id));
                     navigate('/detail');
                   }}
                 >
