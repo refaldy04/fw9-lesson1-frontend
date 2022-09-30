@@ -31,13 +31,13 @@ const ContactUs = () => {
     <Layout>
       <Container fluid className="bg-dark text-light">
         <Row>
-          <Col className="d-flex  flex-column pt-5 pb-5 px-5">
+          <Col md={5} className="d-flex flex-column pt-5 pb-5 px-5">
             <div>
               <p>say hi to the team</p>
-              <h1>Contact Us</h1>
+              <p className="fs-1">Contact Us</p>
             </div>
 
-            <div className="d-flex flex-column  ">
+            <div className="d-flex flex-column">
               <p className="py-5">fell free to contact us and we will get back to you as soon as we can.</p>
 
               <Formik
@@ -95,8 +95,9 @@ const ContactUs = () => {
               </Formik>
             </div>
           </Col>
-          <Col className="d-flex flex-column justify-content-between pt-5 pb-5">
-            <div>
+          {/* <Col xs={2}></Col> */}
+          <Col md={{ span: 5, offset: 2 }} className="d-flex flex-column justify-content-between pt-5 pb-5">
+            <div className="d-flex flex-column">
               <div className="d-flex flex-column mb-4">
                 <p className="text-secondary fw-bolder">opening hours</p>
                 <p>
@@ -127,7 +128,7 @@ const ContactUs = () => {
               </div>
             </div>
 
-            <div className="d-flex gap-5">
+            <div className="d-flex gap-5 mt-5">
               <p>dribbble</p>
               <p>instagram</p>
               <p>linkedin</p>
