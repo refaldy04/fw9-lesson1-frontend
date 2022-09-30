@@ -4,7 +4,7 @@ import qs from 'qs';
 
 export const getAllMessage = createAsyncThunk('message/getAllMessage', async (request) => {
   try {
-    const url = `http://localhost:3314/contactUs?` + request;
+    const url = `https://fw9-lesson1-backend-three.vercel.app/contactUs?` + request;
     const { data } = await axios.get(url);
     console.log('ini dari asyncAction', data);
     return data;
@@ -15,7 +15,7 @@ export const getAllMessage = createAsyncThunk('message/getAllMessage', async (re
 
 export const getMessage = createAsyncThunk('message/getMessage', async (request) => {
   try {
-    const url = `http://localhost:3314/contactUs` + request;
+    const url = `https://fw9-lesson1-backend-three.vercel.app/contactUs/` + request;
     const { data } = await axios.get(url);
     console.log('ini dari asyncAction', data);
     return data;
@@ -26,12 +26,14 @@ export const getMessage = createAsyncThunk('message/getMessage', async (request)
 
 export const createMessage = createAsyncThunk('message/createMessage', async (request) => {
   try {
-    const url = `http://localhost:3314/contactUs/`;
-    const { data } = await axios.post(url, request);
-    console.log('ini dari asyncAction', request);
+    const send = qs.stringify(request);
+    const url = `https://fw9-lesson1-backend-three.vercel.app/contactUs/`;
+    const { data } = await axios.post(url, send);
+    console.log('ini dari asyncAction create', data);
     return data;
   } catch (e) {
-    console.log(e);
+    console.log('ini error asyncAction', e);
+    return e.data.result[0].msg;
   }
 });
 
@@ -41,7 +43,7 @@ export const editMessage = createAsyncThunk(
     const send = qs.stringify(request.message);
     console.log(send);
     try {
-      const url = `http://localhost:3314/contactUs/${request.id}`;
+      const url = `https://fw9-lesson1-backend-three.vercel.app/contactUs/${request.id}`;
       const { data } = await axios.patch(url, send);
       console.log('ini dari asyncAction', data);
       return data;
@@ -55,8 +57,8 @@ export const deleteMessage = createAsyncThunk(
   'message/deleteMessage', // nama action harus unique
   async (request) => {
     try {
-      const url = `http://localhost:3314/contactUs/${request}`;
-      const { data } = await axios.delete(url);
+      const { data } = await axios.delete(`https://fw9-lesson1-backend-three.vercel.app/contactUs/${request.id}`);
+      await request.cb();
       console.log('ini dari asyncAction', data);
       return data;
     } catch (e) {

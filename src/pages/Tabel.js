@@ -30,9 +30,15 @@ function Tabel() {
   };
 
   const deleteData = (id) => {
-    dispatch(deleteMessage(id));
-    setSmShow(false);
-    getData();
+    dispatch(
+      deleteMessage({
+        id,
+        cb: () => {
+          setSmShow(false);
+          getData();
+        },
+      })
+    );
   };
 
   useEffect(() => {
