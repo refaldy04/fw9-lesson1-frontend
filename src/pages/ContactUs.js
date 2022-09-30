@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createMessage } from '../redux/asyncActions/message';
 import { InputGroup } from 'react-bootstrap';
@@ -84,11 +84,12 @@ const ContactUs = () => {
                       <Form.Control.Feedback type="invalid">{errors.message}</Form.Control.Feedback>
                     </Form.Group>
 
-                    <div className="d-grid">
+                    <div className="d-grid mb-3">
                       <Button variant="secondary" type="submit">
                         Submit
                       </Button>
                     </div>
+                    <Link to="/tabel">to datalist</Link>
                   </Form>
                 )}
               </Formik>
