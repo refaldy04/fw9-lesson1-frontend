@@ -14,7 +14,6 @@ const editMessageSchema = Yup.object().shape({
 });
 
 const Detail = () => {
-  const [form, setForm] = useState({});
   const [smShow, setSmShow] = useState(false);
 
   const dataMessage = useSelector((state) => state.message.dataMessage);
@@ -27,10 +26,6 @@ const Detail = () => {
     console.log(data);
     dispatch(editMessage({ id: dataMessage.id, message: data }));
     handleClose();
-  };
-
-  const onChangeText = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   return (
