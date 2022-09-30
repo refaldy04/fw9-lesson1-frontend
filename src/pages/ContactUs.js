@@ -50,8 +50,14 @@ const ContactUs = () => {
                 onSubmit={(values) => {
                   // same shape as initial values
                   console.log(values);
-                  dispatch(createMessage(values));
-                  navigate('/tabel');
+                  dispatch(
+                    createMessage({
+                      values,
+                      cb: () => {
+                        navigate('/tabel');
+                      },
+                    })
+                  );
                 }}
               >
                 {({ errors, handleSubmit, handleChange }) => (

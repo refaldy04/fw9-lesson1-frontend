@@ -26,9 +26,10 @@ export const getMessage = createAsyncThunk('message/getMessage', async (request)
 
 export const createMessage = createAsyncThunk('message/createMessage', async (request) => {
   try {
-    const send = qs.stringify(request);
+    const send = qs.stringify(request.values);
     const url = `https://fw9-lesson1-backend-three.vercel.app/contactUs/`;
     const { data } = await axios.post(url, send);
+    request.cb();
     console.log('ini dari asyncAction create', data);
     return data;
   } catch (e) {
